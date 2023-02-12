@@ -27,8 +27,12 @@ require __DIR__.'/auth.php';
 
 Route::get('/register',[UserController::class,'index']);
 Route::post('/register',[UserController::class,'register']);
-Route::get('/auth', [UserController::class,'check']);
-Route::post('/auth', [UserController::class,'checkUser']);
+
 Route::get('/login',[UserController::class,'show']);
 Route::post('/login', [UserController::class,'login']);
+
 Route::get('/', [AttendanceController::class, 'index']);
+
+Route::post('/start', [AttendanceController::class, 'start']);
+
+Route::post('/finish', [AttendanceController::class, 'finish']);

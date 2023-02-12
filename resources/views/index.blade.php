@@ -14,5 +14,34 @@
   <p>ログインしてください。（<a href="/login">ログイン</a>
   <a href="/register">登録</a>）</p>
 @endif
+
+  <form action=" /start" method="post">
+  @csrf
+    <button>
+      勤務開始
+    </button>
+  </form>
+
+  <form action=" /finish" method="post">
+  @csrf
+    <button>
+      勤務終了
+    </button>
+  </form>
+
+  <form action=" /breakin" method="post">
+  @csrf
+    <button>
+      休憩開始
+    </button>
+  </form>
+
+  <form action=" /breakout" method="post">
+  @csrf
+    <button>
+      休憩終了
+    </button>
+  </form>
+
 </body>
 </html>
