@@ -10,7 +10,12 @@ use Carbon\Carbon;
 class AttendanceController extends Controller
 {
     public function index(){
-        return view('index');
+        $today = Carbon::today()->format('Y-m-d');
+        $user = Auth::user();
+
+        // $attendance = Attendance::where('user_id',$user->id)->where('today',$today)->first();
+        return view('index',['user' =>$user]);
+        // return view('index',['user' =>$user,'attendance'=>$attendance]);
     }
 
     public function start(){
@@ -24,14 +29,14 @@ class AttendanceController extends Controller
             'end_time' => Carbon::now(),
         ]);
 
-        return view('index',['user' => $user]);
+        return view('index',['user' => $user,'attendance'=>$attendance]);
     }
 
     public function finish(){
-        $today = Carbon::today();
+        $today = Carbon::today()->format('Y-m-d');
         $user = Auth::user();
 
-        $endTime = Attendance::where('user_id',$user->id);
+        $endTime = Attendance::where('user_id',$user->id)->where('today',$today);
         $endTime->update([
             'end_time' => Carbon::now(),
         ]);

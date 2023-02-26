@@ -8,15 +8,19 @@
 </head>
 <body>
   <h1>打刻ページ</h1>
-@if (Auth::check())
-  <p>ログイン中ユーザー: {{$user->name . ' メール' . $user->email . ''}}</p>
-@else
-  <p>ログインしてください。（<a href="/login">ログイン</a>
-  <a href="/register">登録</a>）</p>
-@endif
+  @if (Auth::check())
+    <p>ログイン中ユーザー: {{$user->name . ' メール' . $user->email . ''}}</p>
+    <a href="/">ホーム</a>
+    <a href="/attendance">日付一覧</a>
+    <a href="/logout">ログアウト</a>
+  @else
+    <p>ログインしてください。（<a href="/login">ログイン</a>
+    <a href="/register">登録</a>）</p>
+  @endif
 
   <form action=" /start" method="post">
   @csrf
+    <!-- <imput type="hidden" value=""> -->
     <button>
       勤務開始
     </button>

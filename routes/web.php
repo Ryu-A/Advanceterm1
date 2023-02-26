@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\BreakingController;
+use App\Http\Controllers\ListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +33,16 @@ Route::post('/register',[UserController::class,'register']);
 Route::get('/login',[UserController::class,'show']);
 Route::post('/login', [UserController::class,'login']);
 
+Route::get('/logout',[UserController::class,'logout']);
+
 Route::get('/', [AttendanceController::class, 'index']);
 
 Route::post('/start', [AttendanceController::class, 'start']);
 
 Route::post('/finish', [AttendanceController::class, 'finish']);
+
+Route::post('/breakin', [BreakingController::class, 'breakin']);
+
+Route::post('/breakout', [BreakingController::class, 'breakout']);
+
+Route::get('/attendance', [ListController::class, 'show']);

@@ -14,4 +14,13 @@ class Attendance extends Model
         'start_time',
         'end_time',
     ];
+
+    protected $guarded = array('id');
+
+    public function getTitle(){
+        return optional($this->user)->name;
+    }
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
 }
