@@ -17,16 +17,6 @@ class BreakingController extends Controller
         $breaking = Breaking::create([
             'attendance_id' => $attendance->id,
             'start_time' => Carbon::now(),
-            'end_time' => Carbon::now(),
-            $end_time = Carbon::now(),
-            $start_time = Carbon::now(),
-            $break_time =  $start_time->diffInSeconds($end_time),
-
-            $break_time_hour = floor($break_time/3600),
-            $break_time_min = floor(($break_time-($break_time_hour * 3600))/60),
-            $break_time_sec = $break_time-($break_time_hour*3600+$break_time_min*60),
-            'break_time' => ($break_time_hour.':'.$break_time_min.':'.$break_time_sec)
-
         ]);
 
         return view('index',['user' => $user,'attendance'=>$attendance,'breaking' => $breaking]);

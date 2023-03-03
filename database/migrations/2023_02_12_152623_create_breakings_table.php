@@ -17,8 +17,8 @@ class CreateBreakingsTable extends Migration
             $table->id();
             $table->integer('attendance_id');
             $table->time('start_time');
-            $table->time('end_time');
-            $table->time('break_time');
+            $table->time('end_time')->nullable();
+            $table->time('break_time')->nullable();
             $table->timestamps();
         });
     }

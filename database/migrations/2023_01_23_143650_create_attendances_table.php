@@ -18,7 +18,7 @@ class CreateAttendancesTable extends Migration
             $table->integer('user_id');
             $table->date('today');
             $table->time('start_time');
-            $table->time('end_time');
+            $table->time('end_time')->nullable();
             $table->timestamps();
         });
     }

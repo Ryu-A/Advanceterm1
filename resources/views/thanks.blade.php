@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
+@extends('layouts.default')
+<style>
+
+</style>
+@section('title', '打刻ページ１')
+
+@section('content')
   <h1>サンクスページ</h1>
   <a href="/login">ログインページへ</a>
-</body>
-</html>
+@endsection
