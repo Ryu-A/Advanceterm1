@@ -1,8 +1,21 @@
 @extends('layouts.default')
 <style>
-  svg.w-5.h-5 {
-    width: 30px;
-    height: 15px;
+  table {
+    border-collapse:  collapse;
+    width:  90%;
+    table-layout: fixed;
+    text-align:  center;
+    border-style: solid;
+    border-width: 1px 0px;
+    margin: 15px 10px 10px 30px;
+  }
+  th {
+    padding: 10px;
+  }
+  td {
+    border-style: solid;
+    border-width: 1px 0px;
+    padding: 15px;
   }
   .title {
     display:none;
@@ -19,10 +32,77 @@
     font-weight:bold;
   }
   .yesterday {
-    margin: 10px 10px 10px 10px;
+    margin: 13px 15px 10px 10px;
   }
   .tomorrow {
-    margin: 10px 10px 10px 10px;
+    margin: 13px 10px 10px 15px;
+  }
+  .button {
+    background-color: white;
+    color:blue;
+    border-radius: 3px;
+    border: solid 1px;
+    border-color: blue;
+  }
+  .messege {
+    font-size:16;
+    font-weight:bold;
+    color:#999999;
+    margin: 0px;
+    padding: 20px;
+  }
+  .login {
+    text-transform: none;
+    color: blue;
+    text-decoration: none;
+    font-size:16px;
+    font-weight:bold;
+    margin: 10px;
+    padding: 0px;
+  }
+  .register {
+    text-transform: none;
+    color: blue;
+    text-decoration: none;
+    font-size:16px;
+    font-weight:bold;
+    margin: 30px;
+    padding: 0px;
+  }
+  .Pagination {
+    display: flex;
+    align-items: center;
+    border: none;
+  }
+  .Page-item {
+    text-decoration: none;
+    list-style: none;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    margin: 1px;
+    color: #111;
+    font-weight: bold;
+    transition: all 0.15s linear;
+  }
+  .Page-item.disabled {
+    pointer-events: none;
+    background: white;
+    color: #111;
+    }
+  .Page-item.active {
+    pointer-events: none;
+    background: blue;
+    color: #fff;
+    }
+  .Page-Link:not(.isActive):hover {
+    background: blue;
+    color: #fff;
   }
 </style>
 @section('header')
@@ -40,24 +120,26 @@
 @section('title', '日付別勤怠ページ')
 
   @if (Auth::check())
-    <p>ログイン中ユーザー: {{$user->name . ' メール' . $user->email . ''}}</p>
+    <!-- <p>ログイン中ユーザー: {{$user->name . ' メール' . $user->email . ''}}</p> -->
   @else
-    <p>ログインしてください。（<a href="/login">ログイン</a>
-    <a href="/register">登録</a>）</p>
+    <p class="messege">ログインしてください。</p>
+    <a href="/login" class="login">ログイン</a>
+    <a href="/register" class="register">登録</a>
   @endif
 
+  @auth
   <div class="day">
     <form action="/attendance/yesterday" class="yesterday" method="post">
       @csrf
       <input type="hidden" name="today" value="{{ $today }}">
-      <input type="submit" name="" value="<">
+      <input type="submit" class="button" name="" value="<">
     </form>
     <h1 class="today">{{ $today }}</h1>
 
       <form action="/attendance/tomorrow" class="tomorrow" method="post">
       @csrf
       <input type="hidden" name="today" value="{{ $today }}">
-      <input type="submit" name="" value=">">
+      <input type="submit" class="button" name="" value=">">
     </form>
   </div>
 
@@ -81,45 +163,31 @@
         {{ $attendance->end_time }}
       </td>
       <td>
-        {{ $total_break_time->where('attendance_id',$attendance->id)}}
-      </td>
-      <!-- <td>
-        @foreach($total_break_time as $total_bt)
-        @if ($total_bt->total_break_time != null)
-        {{ $total_bt->total_break_time }}
-        @endif
-        @endforeach
-      </td> -->
-      <!-- <td>
-          @foreach($attendance->breakings as $breaking)
-          @if ($breaking != null)
-            {{ $breaking->getTotalBreakTime() }}
-          @else
-          @endif
+        @if($total_break_time != null)
+          <?php 
+            $tbt = $total_break_time->where('attendance_id',$attendance->id); 
+          ?>
+          @foreach($tbt as $total_bt)
+            {{$total_bt->total_break_time}}
           @endforeach
-      </td> -->
-      <!-- @foreach($attendance->breakings as $breaking)
-        <td>
-          @if ($breaking != null)
-            {{ $breaking->break_time }}
-
-          @endif
-        </td>
-      @endforeach
-      @foreach($breakings as $breaking)
-        <td>
-          @if ($breaking != null)
-            {{ $breaking->getId() }}
-            {{ $breaking->getTotalBreakTime() }}
-          @endif
-        </td>
-      @endforeach -->
+        @endif
+      </td>
       <td>
-        {{ $attendance->work_time }}
+        <?php 
+          $start_time = \Carbon\Carbon::create($today.$attendance->start_time);
+          $end_time = \Carbon\Carbon::create($today.$attendance->end_time);
+          $tbt = $total_break_time->where('attendance_id',$attendance->id); 
+          foreach($tbt as $total_bt){
+            $breaking = \Carbon\Carbon::create($total_bt->total_break_time);
+            
+
+          }
+          ?>
       </td>
     </tr>
     @endforeach
   </table>
-{{ $attendances->onEachSide(15)->links() }}
+{{ $attendances->onEachSide(15)->appends(request()->input())->links('vendor.pagination.custom') }}
+  @endauth
 
 @endsection

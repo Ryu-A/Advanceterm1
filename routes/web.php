@@ -46,5 +46,7 @@ Route::post('/breakin', [BreakingController::class, 'breakin']);
 Route::post('/breakout', [BreakingController::class, 'breakout']);
 
 Route::get('/attendance', [ListController::class, 'show']);
+Route::get('/attendance/tomorrow', [ListController::class, 'tomorrow']);
 Route::post('/attendance/tomorrow', [ListController::class, 'tomorrow']);
+Route::get('/attendance/yesterday', [ListController::class, 'yesterday']);
 Route::post('/attendance/yesterday', [ListController::class, 'yesterday']);

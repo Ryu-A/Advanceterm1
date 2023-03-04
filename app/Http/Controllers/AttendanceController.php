@@ -21,14 +21,13 @@ class AttendanceController extends Controller
         $user = Auth::user();
         $request->flash();
 
+            $attendance = Attendance::create([
+                'user_id' => $user->id,
+                'today' => $today,
+                'start_time' => Carbon::now(),
+            ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'today' => $today,
-            'start_time' => Carbon::now(),
-        ]);
-
-        return view('index',['user' => $user,'attendance'=>$attendance]);
+        return view('index',['user' => $user,]);
     }
 
     public function finish(){
@@ -36,9 +35,9 @@ class AttendanceController extends Controller
         $user = Auth::user();
 
         $endTime = Attendance::where('user_id',$user->id)->where('today',$today);
-        $endTime->update([
+            $endTime->update([
             'end_time' => Carbon::now(),
-        ]);
+            ]);
 
         return view('index',['user' => $user]);
     }
