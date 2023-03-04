@@ -34,6 +34,8 @@ mysql  Ver 15.1 Distrib 10.4.25-MariaDB, for Win64
 
 ##テーブル設計
 
+![README_2](https://user-images.githubusercontent.com/114894324/222876558-0edbfe4c-3ce1-441d-bf13-eee671a03f68.png)
+
 ##ER図
 
 ##環境構築
