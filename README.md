@@ -38,6 +38,8 @@ mysql  Ver 15.1 Distrib 10.4.25-MariaDB, for Win64
 
 ##ER図
 
+![atte-db drawio](https://user-images.githubusercontent.com/114894324/222876569-6e0a1a60-941f-4050-ab0e-5f4d55e99e26.png)
+
 ##環境構築
 
 ##その他の記載事項
